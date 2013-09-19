@@ -47,6 +47,7 @@ class AzGame
   #class instance variables are specific to only that class
 
 
+  include Math
 
   def initialize(nick, interface = nil)
     @dictionary = AzDictionary.new('en_dict.txt')
@@ -113,7 +114,7 @@ class AzGame
   end
 
   def win(player)
-    say("Hurray! #{player.to_s} has won after #{player.tries} tries and #{@total_guesses} total tries")
+    say("Hurray! #{player.to_s} has won for #{score} points after #{player.tries} tries and #{@total_guesses} total tries")
   end
 
   def add_player(nick)
@@ -132,6 +133,12 @@ class AzGame
     @interface.notify(text)
   end
 
+  def score
+    n = @total_guesses
+    p = @players.length
+    t = (100*exp(-(n-1)**2/50**2)).ceil + p
+    return t
+  end
 
 end
 
